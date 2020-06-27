@@ -1,14 +1,101 @@
 <!DOCTYPE html>
 <html lang = "en">
    <head>
-      <script src = "https://d3js.org/d3.v4.min.js"></script>
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	  <script src = "https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
    </head>
 
    <body>
+   <canvas id="chart" width="700"></canvas>
+    <canvas id="chart2" width="700"></canvas>
       <script>
-        d3.csv("test.csv", function(data){
-            console.log(data)
-		});
+        d3.json("data.json")
+  .then(makeChart);
+  
+  function makeChart(players) {
+  var playerLabels =players.model.map(function(d) {return d.name});;
+  var weeksData =players.model.map(function(d) {return d.count});;
+console.log(playerLabels)
+console.log(weeksData)
+
+  var chart = new Chart('chart', {
+   type: 'bar',
+   data: {
+      labels: ['Operation Class', 'Expression'], // responsible for how many bars are gonna show on the chart
+      // create 12 datasets, since we have 12 items
+      // data[0] = labels[0] (data for first bar - 'Standing costs') | data[1] = labels[1] (data for second bar - 'Running costs')
+      // put 0, if there is no data for the particular bar
+      datasets: [{
+         label: 'GroupCombine',
+         data: [2, 1],
+         backgroundColor: '#22aa99'
+      }, {
+         label: 'Transform',
+         data: [1, 4],
+         backgroundColor: '#994499'
+      }, {
+         label: 'Filter',
+         data: [2, 1],
+         backgroundColor: '#316395'
+      }, {
+         label: 'Normalize',
+         data: [5, 2],
+         backgroundColor: '#b82e2e'
+      }]
+   },
+   options: {
+      responsive: false,
+      legend: {
+         position: 'right' // place legend on the right side of chart
+      },
+      scales: {
+         xAxes: [{
+            stacked: true // this should be set to make the bars stacked
+         }],
+         yAxes: [{
+            stacked: true // this also..
+         }]
+      }
+   }
+});
+
+ var chart = new Chart('chart2', {
+   type: 'bar',
+   data: {
+      labels: ['GroupCombine', 'Filter','Normalize','Transform'], // responsible for how many bars are gonna show on the chart
+      // create 12 datasets, since we have 12 items
+      // data[0] = labels[0] (data for first bar - 'Standing costs') | data[1] = labels[1] (data for second bar - 'Running costs')
+      // put 0, if there is no data for the particular bar
+      datasets: [{
+         label: 'Expression',
+         data: [1, 2, 1, 4],
+         backgroundColor: '#22aa99'
+      }, {
+         label: 'Operation',
+         data: [1, 4, 3, 2],
+         backgroundColor: '#994499'
+      }]
+   },
+   options: {
+      responsive: false,
+      legend: {
+         position: 'right' // place legend on the right side of chart
+      },
+      scales: {
+         xAxes: [{
+            stacked: true // this should be set to make the bars stacked
+         }],
+         yAxes: [{
+            stacked: true // this also..
+         }]
+      }
+   }
+});
+  
+  
+
+}
+  
       </script>
    </body>
 </html>
