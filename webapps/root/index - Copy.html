@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	  <script src = "https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+   </head>
+
+   <body>
+   <canvas id="chart"></canvas>
+   
+      <script>
+        d3.json("data.json")
+  .then(makeChart);
+  
+  function makeChart(players) {
+  var playerLabels =players.model.map(function(d) {return d.name});;
+  var weeksData =players.model.map(function(d) {return d.count});;
+console.log(playerLabels)
+console.log(weeksData)
+
+  var chart = new Chart('chart', {
+    type: 'bar',
+    data: {
+      labels: playerLabels,
+      datasets: [
+        {
+          data: weeksData
+        }
+      ]
+    },
+	 options: {
+    responsive: false,
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+  });
+  
+  
+
+}
+  
+      </script>
+   </body>
+</html>
