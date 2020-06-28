@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<!-- Basic Page Needs -->
+		<meta charset="UTF-8">
+		<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+		<title>One Admin</title>
+
+		<meta name="author" content="themsflat.com">
+
+		<!-- Mobile Specific Metas -->
+	    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- Boostrap style -->
+		<!-- <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css"> -->
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap4-alpha3.min.css">
+
+		<!-- FONTS-->
+		<link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+
+		<!-- Theme style -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+		<!-- Calendar -->
+		<link href='stylesheets/fullcalendar.min.css' rel='stylesheet' />
+		<link href='stylesheets/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+
+		<!-- Responsive -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/responsive.css">
+
+		<!-- Favicon -->
+	    <link href="images/icon/favicon.png" rel="shortcut icon">
+		
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+		
+	</head>
+<body>
+
+<header id="header" class="header fixed">
+			<div class="navbar-top">
+			  <div class="curren-menu info-left">
+					<!-- /.logo -->
+					
+					<div class="box-title" >
+			              		
+                                <span class="text">HG INSIGHT</span>
+			              	</div>
+				</div><!-- /.curren-menu -->
+				<ul class="info-right">
+					<li class="setting"></li><!-- /.setting -->
+					<li class="notification"><!-- /.notification -->					</li>
+					<li class="button-menu-right"></li><!-- /.button-menu-right -->
+				</ul><!-- /.info-right -->
+			  <div class="clearfix"></div>
+			</div>	<!-- /.navbar-top -->
+		</header><!-- /header <--><!-- /.vertical-navigation -->
+
+
+<main>
+			<section id="dashboard">
+			
+				<div class="rows">
+					<div class="status-bar">
+						<ul>
+							<li class="progres">
+								<div class="icon">
+									<img src="images/icon/progress.png" alt="">
+								</div>
+								<div class="content">
+									<div class="numb" data-from="0" data-to="38" data-speed="1000" data-waypoint-active="yes">38</div>
+									<div class="text">
+										TASK PROGRESS
+									</div>
+								</div>
+							</li><!-- /.progres -->
+							<li class="progres">
+								<div class="icon">
+									<img src="images/icon/task.png" alt="">
+								</div>
+								<div class="content">
+									<div class="numb" data-from="0" data-to="59" data-speed="1000" data-waypoint-active="yes">59</div>
+									<div class="text">
+										TASK RESEARCH
+									</div>
+								</div>
+							</li><!-- /.progres -->
+							<li class="progres">
+								<div class="icon">
+									<img src="images/icon/tick.png" alt="">
+								</div>
+								<div class="content">
+									<div class="numb" data-from="0" data-to="87" data-speed="1000" data-waypoint-active="yes">87</div>
+									<div class="text">
+										TASK COMPLETED
+									</div>
+								</div>
+							</li><!-- /.progres -->
+							<li class="progres">
+								<div class="icon">
+									<img src="images/icon/chart.png" alt="">
+								</div>
+								<div class="content">
+									<div class="numb" data-from="0" data-to="43" data-speed="1000" data-waypoint-active="yes">43</div>
+									<div class="text">
+										ONGOING PROJECT
+									</div>
+								</div>
+							</li><!-- /.progres -->
+						</ul>
+					</div><!-- /.status-bar -->
+				</div><!-- /.rows -->
+			
+			
+				<div class="rows">
+		        	<div class="box box-danger left">
+			            <div class="box-header with-border">
+			              	<div class="box-title">
+			              		<h3>ANALYSIS</h3>
+			              	</div>
+			              	<div class="box-content">
+							<div class="divider50"></div>
+								
+							</div>
+			              
+			            </div><!-- /.box-header -->
+			            
+		         	</div><!-- /.box box-danger -->
+		         	
+		         	
+				</div><!-- /.rows -->
+			</section>
+</main>
+
+<canvas id="chart" ></canvas>
+<script>
+        d3.json("data.json")
+  .then(makeChart);
+  
+  function makeChart(players) {
+  var playerLabels =players.model.map(function(d) {return d.name});;
+  var weeksData =players.model.map(function(d) {return d.count});;
+console.log(playerLabels)
+console.log(weeksData)
+
+  var chart = new Chart('chart', {
+   type: 'bar',
+   data: {
+      labels: ['Operation Class', 'Expression'], // responsible for how many bars are gonna show on the chart
+      // create 12 datasets, since we have 12 items
+      // data[0] = labels[0] (data for first bar - 'Standing costs') | data[1] = labels[1] (data for second bar - 'Running costs')
+      // put 0, if there is no data for the particular bar
+      datasets: [{
+         label: 'GroupCombine',
+         data: [2, 1],
+         backgroundColor: '#22aa99'
+      }, {
+         label: 'Transform',
+         data: [1, 4],
+         backgroundColor: '#994499'
+      }, {
+         label: 'Filter',
+         data: [2, 1],
+         backgroundColor: '#316395'
+      }, {
+         label: 'Normalize',
+         data: [5, 2],
+         backgroundColor: '#b82e2e'
+      }]
+   },
+   options: {
+      responsive: false,
+      legend: {
+         position: 'right' // place legend on the right side of chart
+      },
+      scales: {
+         xAxes: [{
+            stacked: true // this should be set to make the bars stacked
+         }],
+         yAxes: [{
+            stacked: true // this also..
+         }]
+      }
+   }
+});
+
+
+  
+  
+
+}
+  
+      </script>
+
+</body>
+</html>
